@@ -1,12 +1,15 @@
 import requests
 from os import mkdir
+with open('token.txt', 'r') as f:
+    my_token = f.read()
 
+TOKEN = my_token
 COUNT_OF_POSTS = 10000 # количество постов
 
 class Parser:
     def __init__(self):
         self.__main_url = 'https://api.vk.com/method/wall.get' # урла для реквеста
-        self.__token = '8e3947e09f2d710918e99165329c1170ba2c66f9103447282ef9c43c3c314aa8a990d80529541dac95f07'  #
+        self.__token = TOKEN  #
         # придумать другую возможность импорта токена
         self.version = 5.21  # версия вк апи
         self.my_count = 100 # максимум за такт - 100 постов
