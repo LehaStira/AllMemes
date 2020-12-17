@@ -8,6 +8,11 @@ COUNT_OF_POSTS = 10000 # количество постов
 
 class Parser:
     def __init__(self):
+        """
+        При инициализации определяет апи метод меин урла
+        Токен читает из константы, которая читается из файла
+        Версия вк апи - 5.21
+        """
         self.__main_url = 'https://api.vk.com/method/wall.get' # урла для реквеста
         self.__token = TOKEN  #
         # придумать другую возможность импорта токена
@@ -19,19 +24,44 @@ class Parser:
 
     @staticmethod
     def create_dir_of_group(path):
+        """
+        Создает папку не с качеством
+        :param path:
+        :return:
+        """
         mkdir(path)
 
     @staticmethod
     def create_dir_of_quality(path):
+        """
+        Создает папку с качеством
+        :param path:
+        :return:
+        """
         mkdir(path)
 
     @staticmethod
     def save_meme(path, image_bytes):
+        """
+        вызывается из даунлоад, сохраняет последовательность байт в картинку
+        :param path:
+        :param image_bytes:
+        :return:
+        """
         with open(path, 'wb') as f:
             f.write(image_bytes)
 
-
     def download(self, url, domain, quality):
+        """
+        Функция вызывается из гет мемес
+        Сохраняет мем в папку
+        Создает папку с доменом - в нем папку с качеством и туда кидает мемы
+
+        :param url:
+        :param domain:
+        :param quality:
+        :return:
+        """
         image_bytes = requests.get(url).content
         dir_of_group = f'{domain}'
         try:
@@ -53,6 +83,15 @@ class Parser:
         return f'Привет, это лог! {self.c}.jpg успешно поставлен! Качество = {quality}, путь - {meme_path}'
 
     def get_memes(self, domain):
+        """
+        домен - это ссылка на группу.
+        Функция обрабатывает десять тысяч постов и сохраняет все фотографии, что есть в качестве 2560
+        Проверить заодно, что сохраняет только в этом качестве
+        Проверить, что сохраняет только картинки
+        и тд
+        :string domain:
+        :return:
+        """
         c = 0  # сколько сохраненных картинок
         COUNT_OF_POSTS = 10000  # количество постов
         while self.my_offset <= COUNT_OF_POSTS:
@@ -89,7 +128,3 @@ if __name__ == '__main__':
     list_of_domains = ['dobriememes', 'prosvet_pub', 'eight_out_ten']
     for domain in list_of_domains:
         my_parse.get_memes(domain=domain)
-
-
-
-
