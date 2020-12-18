@@ -1,23 +1,26 @@
-import numpy as np
+import tensorflow
 import keras
-from tensorflow.keras.models import load_model
+import numpy as np
+import tensorflow.keras
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+#from tensorflow.keras.models import load_model
+from tensorflow.keras import layers
 from PIL import Image
 from skimage import transform
 
 
 class Olga:
     def __init__(self):
-        self.path_to_model = 'model_meme_predict.h5'
-        self.model = load_model(self.path_to_model)
+        self.path_to_model = 'C:\\AllMemes\\model_meme_predict.h5'
+        self.model = tensorflow.keras.models.load_model(self.path_to_model)
 
-    def predict_for_one(self, name):
+    def predict_for_one(self, path_to_picture):
         """
         Мем или не мем для одной пикчи
         Если не мем - False
         Если мем - True
         """
-        path_of_meme = f'{self.path_to_file}\\{name}'
-        my_image = self.load(path_of_meme)
+        my_image = self.load(path_to_picture)
         my_prediction = self.model.predict(my_image)
         if my_prediction[0][0] > my_prediction[0][1]:
             return False
@@ -44,5 +47,8 @@ class Olga:
         np_image = np.expand_dims(np_image, axis=0)
         return np_image
 
-
+if __name__ == '__main__':
+    my_path = 'dobriememes/photo_2560/0.jpg'
+    my_predict = Olga()
+    my_predict.predict_for_one(my_predict)
 

@@ -1,10 +1,13 @@
 import requests
-from os import mkdir
+from os import mkdir  # либа на создание директории
+#from Neyro import Olga
+from os import remove  # либа на удаление файла
 with open('token.txt', 'r') as f:
     my_token = f.read()
 
 TOKEN = my_token
 COUNT_OF_POSTS = 10000 # количество постов
+
 
 class Parser:
     def __init__(self):
@@ -79,8 +82,13 @@ class Parser:
         meme_path = f'{dir_of_quality}\\{self.c}.jpg'
         Parser.save_meme(path = meme_path,
                          image_bytes = image_bytes)
-
+        #my_predict = Olga()
+        #question = my_predict.predict_for_one(meme_path)
+        #if question:
         return f'Привет, это лог! {self.c}.jpg успешно поставлен! Качество = {quality}, путь - {meme_path}'
+        #else:
+            #remove(meme_path)
+            #return "It was no meme..."
 
     def get_memes(self, domain):
         """
