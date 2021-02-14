@@ -101,7 +101,7 @@ class Parser:
         :return:
         """
         c = 0  # сколько сохраненных картинок
-        COUNT_OF_POSTS = 10000  # количество постов
+        COUNT_OF_POSTS = 100000  # количество постов
         while self.my_offset <= COUNT_OF_POSTS:
             response = requests.get(self.__main_url, params={
                 'access_token': self.__token,
@@ -123,16 +123,16 @@ class Parser:
                                                  domain = domain,
                                                  quality = quality)
                     print(res_string)
+                    self.my_offset += 100
                 except IndexError:
                     pass
                 except KeyError:
                     print('Нет фотографии')
 
 
-
-
 if __name__ == '__main__':
     my_parse = Parser()
-    list_of_domains = ['dobriememes', 'prosvet_pub', 'eight_out_ten']
+    #list_of_domains = ['dobriememes', 'prosvet_pub', 'eight_out_ten']
+    list_of_domains = ['ru9gag']
     for domain in list_of_domains:
         my_parse.get_memes(domain=domain)
